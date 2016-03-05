@@ -11,6 +11,7 @@ import os
 import subprocess
 import tempfile
 import shutil
+import subprocess
 
 if os.getenv('PDFTK_PATH'):
     PDFTK_PATH = os.getenv('PDFTK_PATH')
@@ -57,11 +58,13 @@ def fill_form(pdf_path, datas={}, out_file=None, flatten=True):
         cleanOnFail = True
         handle, out_file = tempfile.mkstemp()
 
-    cmd = "%s %s fill_form %s output %s" % (PDFTK_PATH, pdf_path, tmp_fdf, out_file)
-    if flatten:
-        cmd += ' flatten'
+    # cmd = "%s %s fill_form %s output %s" % (PDFTK_PATH, pdf_path, tmp_fdf,
+        # out_file)
+    # if flatten:
+        # cmd += ' flatten'
     try:
-        run_command(cmd, True)
+        # run_command(cmd, True)
+        subprocess.call([PDFTK_PATH, pdf_path, tmp_fdf, out_file])
     except:
         if cleanOnFail:
             os.remove(tmp_fdf)
